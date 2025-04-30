@@ -1,70 +1,92 @@
 ###################
-What is CodeIgniter
+PROYECTO VIP2CARS
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+A realizar:
+1. Elaborar el modelado de BBDD de un sistema de encuestas anónimas. 
+2. Considerando que la empresa VIP2CARS es del rubro automotriz, elaborar 
+un CRUD que registre los datos de los vehículos y sus contactos. Para ello 
+puede usar el framework PHP de su preferencia el cual fue Codelgniter V.3 en XAMPP
 
 *******************
-Release Information
+# VIP2CARS - CRUD de Vehículos y Contactos (CodeIgniter 3.1.11)
 *******************
-
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+## Requisitos
+- PHP >= 7.2
+- MySQL
+- Apache (XAMPP, Laragon, etc.)
 
 **************************
-Changelog and New Features
+BD MySQL - phpA
 **************************
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+Crea la base de datos vip2cars en phpMyAdmin y ejecuta sql
 
-*******************
-Server Requirements
-*******************
+-- Tabla de vehículos
+CREATE TABLE vehiculos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    placa VARCHAR(20) NOT NULL UNIQUE,
+    marca VARCHAR(100) NOT NULL,
+    modelo VARCHAR(100) NOT NULL,
+    anio_fabricacion YEAR NOT NULL,
+    nombre_cliente VARCHAR(100) NOT NULL,
+    apellidos_cliente VARCHAR(100) NOT NULL,
+    documento_cliente VARCHAR(20) NOT NULL,
+    correo_cliente VARCHAR(100) NOT NULL,
+    telefono_cliente VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-PHP version 5.6 or newer is recommended.
+-- Tabla de encuestas
+CREATE TABLE encuestas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+-- Preguntas de cada encuesta
+CREATE TABLE preguntas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    encuesta_id INT NOT NULL,
+    texto TEXT NOT NULL,
+    tipo ENUM('texto', 'opcion_multiple', 'opcion_unica') NOT NULL,
+    FOREIGN KEY (encuesta_id) REFERENCES encuestas(id) ON DELETE CASCADE
+);
+
+-- Opciones para preguntas tipo selección
+CREATE TABLE opciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pregunta_id INT NOT NULL,
+    texto VARCHAR(255) NOT NULL,
+    FOREIGN KEY (pregunta_id) REFERENCES preguntas(id) ON DELETE CASCADE
+);
+
+-- Respuestas del usuario (anónimas)
+CREATE TABLE respuestas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pregunta_id INT NOT NULL,
+    opcion_id INT NULL,
+    respuesta_texto TEXT,
+    fecha_respuesta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (pregunta_id) REFERENCES preguntas(id) ON DELETE CASCADE,
+    FOREIGN KEY (opcion_id) REFERENCES opciones(id) ON DELETE CASCADE
+);
+
+
 
 ************
 Installation
 ************
+Link de descarga del framework: https://codeigniter.com/userguide3/installation/downloads.html 
+la version CodeIgniter v3.1.11
 
-Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
+Link de descarga del Visual Code: https://code.visualstudio.com/
 
 *******
-License
+Pasos a seguir para ejecutar el proyecto
 *******
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
 
-*********
-Resources
-*********
 
--  `User Guide <https://codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
 
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
