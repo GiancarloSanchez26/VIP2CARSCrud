@@ -87,6 +87,24 @@ Link de descarga del Visual Code: https://code.visualstudio.com/
 Pasos a seguir para ejecutar el proyecto
 *******
 
+1. Se dirige a la ruta de su XAMPP: C:\xampp\htdocs
+2. Copia y descomprime el archivo descargado del framework
+3. cambia de nombre a VIP2CARSCrud
+4. Descarga los comprimido del proyecto del link: https://github.com/GiancarloSanchez26/VIP2CARSCrud.git
+5. Copia los archivos en la carpeta VIP2CARSCrud
+6. Dirijase al archivo  routers ubicado en la carpeta config y fijarse el siguiente comando si tiene el controlador correcto para ejecutar: $route['default_controller'] = 'Vehiculos';
+7. Ejecutar el proyecto de manera local: http://localhost/VIP2CARSCrud/
 
+*******
+Pasos a seguir para ejecutar el proyecto
+*******
+La segunda opcion seria ejecutarlo mediante comando
+1. crea una carptea en  C:\xampp\htdocs llamad a VIP2CARSCrud
+2. ejecuta el gitbash y clona el proyecto el cual es: git clone https://github.com/GiancarloSanchez26/VIP2CARSCrud.git
+3. abre el proyecto en visual code o su herramienta de preferencia
+4. abre el link en el url y listo: http://localhost/VIP2CARSCrud/
+
+
+SALUDOS.
 
 
